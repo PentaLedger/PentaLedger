@@ -35,6 +35,7 @@ include_directories(${JWT_CPP_INCLUDE_DIR})
 # Source files
 set(SOURCES
     src/main.cpp
+    src/middleware/CorsFilter.cpp
     src/middleware/JwtAuth.cpp
     src/controllers/AuthController.cpp
     src/controllers/AccountController.cpp
@@ -47,6 +48,7 @@ set(SOURCES
 
 # Header files
 set(HEADERS
+    include/middleware/CorsFilter.h
     include/middleware/JwtAuth.h
     include/controllers/AuthController.h
     include/controllers/AccountController.h

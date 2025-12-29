@@ -5,14 +5,15 @@
 #include <drogon/HttpResponse.h>
 #include <json/json.h>
 #include <jwt-cpp/jwt.h>
+#include "middleware/CorsFilter.h"
 
 class AuthController : public drogon::HttpController<AuthController>
 {
 public:
     METHOD_LIST_BEGIN
-        ADD_METHOD_TO(AuthController::registerUser, "/api/auth/register", drogon::Post);
-        ADD_METHOD_TO(AuthController::login, "/api/auth/login", drogon::Post);
-        ADD_METHOD_TO(AuthController::refresh, "/api/auth/refresh", drogon::Post);
+        ADD_METHOD_TO(AuthController::registerUser, "/api/auth/register", drogon::Post, "CorsFilter");
+        ADD_METHOD_TO(AuthController::login, "/api/auth/login", drogon::Post, "CorsFilter");
+        ADD_METHOD_TO(AuthController::refresh, "/api/auth/refresh", drogon::Post, "CorsFilter");
     METHOD_LIST_END
 
     void registerUser(const drogon::HttpRequestPtr &req,

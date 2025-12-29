@@ -1,5 +1,6 @@
 #include <drogon/drogon.h>
 #include "database/DbManager.h"
+#include "middleware/CorsFilter.h"
 #include "middleware/JwtAuth.h"
 #include "controllers/AuthController.h"
 #include "controllers/AccountController.h"
@@ -26,6 +27,7 @@ int main()
     // Initialize database connection
     DbManager::initialize(connectionString);
 
+    // CORS is handled by CorsFilter (auto-registered when used) and JsonResponse utility
     // JWT middleware is auto-registered by Drogon when used in controllers
 
     // Get port from environment or use default
@@ -34,6 +36,32 @@ int main()
 
     std::cout << "Starting PentaLedger API server on port " << port << std::endl;
     std::cout << "Database: " << dbHost << ":" << dbPort << "/" << dbName << std::endl;
+
+    // Add global response handler to add CORS headers to all responses
+    drogon::app().registerPostHandlingAdvice([](const drogon::HttpRequestPtr &req, const drogon::HttpResponsePtr &resp) {
+        if (resp)
+        {
+            resp->addHeader("Access-Control-Allow-Origin", "*");
+            resp->addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+            resp->addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+        }
+    });
+
+    drogon::app().registerPreRoutingAdvice([](const drogon::HttpRequestPtr &req,
+                                  drogon::FilterCallback &&stop,
+                                  drogon::FilterChainCallback &&pass)
+   {
+    // Let anything not starting with /api or not a preflight request through
+    if(!req->path().starts_with("/api") || req->method() != drogon::Options) {
+        pass();
+        return;
+    }
+    auto resp = HttpResponse::newHttpResponse();
+    resp->addHeader("Access-Control-Allow-Origin", "*");
+    resp->addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    // Add other CORS headers you need
+    stop(resp); // stops processing the request and sends the response
+    }
 
     // Run the HTTP framework
     drogon::app()

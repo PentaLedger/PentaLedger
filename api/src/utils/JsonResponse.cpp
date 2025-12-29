@@ -3,6 +3,13 @@
 
 namespace JsonResponse
 {
+    void addCorsHeaders(drogon::HttpResponsePtr &resp)
+    {
+        resp->addHeader("Access-Control-Allow-Origin", "*");
+        resp->addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+        resp->addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+    }
+
     drogon::HttpResponsePtr success(const Json::Value &data)
     {
         Json::Value response;
@@ -11,7 +18,9 @@ namespace JsonResponse
         {
             response["data"] = data;
         }
-        return drogon::HttpResponse::newHttpJsonResponse(response);
+        auto resp = drogon::HttpResponse::newHttpJsonResponse(response);
+        addCorsHeaders(resp);
+        return resp;
     }
 
     drogon::HttpResponsePtr error(const std::string &message, int statusCode)
@@ -21,6 +30,7 @@ namespace JsonResponse
         response["error"] = message;
         auto resp = drogon::HttpResponse::newHttpJsonResponse(response);
         resp->setStatusCode(static_cast<drogon::HttpStatusCode>(statusCode));
+        addCorsHeaders(resp);
         return resp;
     }
 

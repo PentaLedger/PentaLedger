@@ -4,17 +4,18 @@
 #include <drogon/HttpRequest.h>
 #include <drogon/HttpResponse.h>
 #include <drogon/HttpFilter.h>
+#include "middleware/CorsFilter.h"
 #include "middleware/JwtAuth.h"
 
 class AccountController : public drogon::HttpController<AccountController>
 {
 public:
     METHOD_LIST_BEGIN
-        ADD_METHOD_TO(AccountController::create, "/api/accounts", drogon::Post, "JwtAuth");
-        ADD_METHOD_TO(AccountController::list, "/api/accounts", drogon::Get, "JwtAuth");
-        ADD_METHOD_TO(AccountController::getById, "/api/accounts/{id}", drogon::Get, "JwtAuth");
-        ADD_METHOD_TO(AccountController::update, "/api/accounts/{id}", drogon::Put, "JwtAuth");
-        ADD_METHOD_TO(AccountController::remove, "/api/accounts/{id}", drogon::Delete, "JwtAuth");
+        ADD_METHOD_TO(AccountController::create, "/api/accounts", drogon::Post, "CorsFilter", "JwtAuth");
+        ADD_METHOD_TO(AccountController::list, "/api/accounts", drogon::Get, "CorsFilter", "JwtAuth");
+        ADD_METHOD_TO(AccountController::getById, "/api/accounts/{id}", drogon::Get, "CorsFilter", "JwtAuth");
+        ADD_METHOD_TO(AccountController::update, "/api/accounts/{id}", drogon::Put, "CorsFilter", "JwtAuth");
+        ADD_METHOD_TO(AccountController::remove, "/api/accounts/{id}", drogon::Delete, "CorsFilter", "JwtAuth");
     METHOD_LIST_END
 
     void create(const drogon::HttpRequestPtr &req,

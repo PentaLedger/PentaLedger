@@ -17,6 +17,10 @@ void JwtAuth::doFilter(const drogon::HttpRequestPtr &req,
         json["message"] = "Invalid or missing token";
         auto resp = drogon::HttpResponse::newHttpJsonResponse(json);
         resp->setStatusCode(drogon::k401Unauthorized);
+        // Add CORS headers to error response
+        resp->addHeader("Access-Control-Allow-Origin", "*");
+        resp->addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+        resp->addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
         fcb(resp);
         return;
     }
