@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  database:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    container_name: pentaledger-db
+    environment:
+      POSTGRES_DB: pentaledger
+      POSTGRES_USER: pentaledger
+      POSTGRES_PASSWORD: pentaledger_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pentaledger"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pentaledger-network
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: pentaledger-api
+    environment:
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: pentaledger
+      DB_USER: pentaledger
+      DB_PASSWORD: pentaledger_dev
+      API_PORT: 8080
+      JWT_SECRET: change-this-secret-key-in-production
+    ports:
+      - "8080:8080"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - pentaledger-network
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: pentaledger-web
+    environment:
+      VITE_API_URL: http://localhost:8080
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    networks:
+      - pentaledger-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  pentaledger-network:
+    driver: bridge
+
