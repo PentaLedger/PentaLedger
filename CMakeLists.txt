@@ -11,6 +11,7 @@ include_directories(include)
 # Source files
 set(SOURCES
     src/storage/data_file.cpp
+    src/btree/btree_file.cpp
 )
 
 # Header files
@@ -18,6 +19,9 @@ set(HEADERS
     include/pentaledger/types.hpp
     include/pentaledger/record_pointer.hpp
     include/pentaledger/data_file.hpp
+    include/pentaledger/data_file_header.hpp
+    include/pentaledger/btree_file.hpp
+    include/pentaledger/btree_file_header.hpp
 )
 
 # Create library

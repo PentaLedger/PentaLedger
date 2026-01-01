@@ -12,6 +12,7 @@ FetchContent_MakeAvailable(googletest)
 # Test sources
 set(TEST_SOURCES
     test_data_file.cpp
+    test_btree_file.cpp
 )
 
 # Create test executable
