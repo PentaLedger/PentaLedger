@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>PentaLedger Mileage needs location access to automatically track your vehicle trips and calculate distance traveled.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>PentaLedger Mileage needs "Always" location access to track trips in the background when you're driving, even when the app is not visible. This enables accurate automatic mileage tracking.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
+</dict>
+</plist>
