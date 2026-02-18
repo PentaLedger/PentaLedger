@@ -1,0 +1,71 @@
+
+//! \brief PentaLedger Namespace
+//! This namespace contains all of the pentaledger codebase.
+namespace pentaledger
+{
+
+    //! \brief Time and Date
+    //! This namespace contains code relating to the manipulation of
+    //! time and dates.
+    namespace time
+    {
+
+    }
+
+    //! \brief Transporation
+    //! This namespace contains formulas, enumerations, constants, and
+    //! inline code relating to transportation processes.
+    namespace transportation
+    {
+
+    };
+
+    //! \brief Accounting
+    //! This namespace contains formulas, enumerations, constants, and
+    //! inline code relating to accounting processes.
+    //!
+    //! More specifically, this namespace contains code to calculate payroll taxes,
+    //! witholding, and otherwise generate payroll checks.
+    namespace accounting
+    {
+
+        //! \brief Payroll
+        //! This namespace contains formulas, enumerations, constants, and
+        //! inline code relating to payroll operations.
+        namespace payroll
+        {
+
+        }
+    }
+
+    namespace converter
+    {
+    }
+
+    namespace db {
+    }
+
+    namespace gambling
+    {
+    }
+
+    //! \brief Inventory namespace
+    namespace inventory
+    {
+    }
+
+    //! \brief Design Patterns and Idioms
+	//!
+	//! A design pattern is a generalized reusable solution to a commonly occurring problem
+	//! within a given software design context. Leveraging design patterns can
+	//! speed up development by providing tested, proven development paradigms.
+	//!
+	//! While the design pattern fad may have passed, there are still some very useful
+	//! design idioms out there.
+	//!
+	//!
+    namespace patterns {}
+
+    namespace utility {
+    }
+}
