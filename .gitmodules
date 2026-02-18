@@ -1,3 +1,6 @@
 [submodule "third-party/stduuid"]
 	path = third-party/stduuid
 	url = https://github.com/mariusbancila/stduuid.git
+[submodule "third-party/OpenXLSX"]
+	path = third-party/OpenXLSX
+	url = https://github.com/troldal/OpenXLSX.git
