@@ -59,6 +59,10 @@ int main(int argc, char* argv[]) {
         res.set_content("{\"status\":\"ok\"}", "application/json");
     });
 
+    svr.Get("/v0/healthcheck", [](const httplib::Request&, httplib::Response& res) {
+        res.set_content("{\"status\":\"ok\"}", "application/json");
+    });
+
     spdlog::info("Server starting on {}:{}", address, port);
 
     if (!svr.listen(address.c_str(), port)) {
