@@ -5,8 +5,11 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Path to the submodule
+set(STDUUID_DIR ${CMAKE_SOURCE_DIR}/third_party/stduuid)
 # Include directories
 include_directories(include)
+include_directories(${STDUUID_DIR}/include)
 
 # Source files
 set(SOURCES
@@ -37,6 +40,9 @@ enable_testing()
 
 # Add test subdirectory
 add_subdirectory(tests)
+add_subdirectory(apps)
+add_subdirectory(server)
+
 
 # Add examples subdirectory
 #add_subdirectory(examples)
